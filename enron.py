@@ -3,7 +3,10 @@ from collections import Counter
 from email.parser import Parser
 import nltk
 from nltk.tokenize import word_tokenize
+nltk.download('stopwords')
 from nltk.corpus import stopwords
+
+
 
 #---------------Functions---------------#
 
@@ -28,7 +31,7 @@ def email_analyse(inputfile, to_email_list, from_email_list, email_body):
     email_body.append(email.get_payload())
 
 #Funciton to print given datasets to given filename to a CSV
-def CSVPrint(filename,email_list):
+def txtPrint(filename,email_list):
    with open(filename, "w") as f:
     for to_email in email_list:
         if to_email:
@@ -56,10 +59,10 @@ for directory, subdirectory, filenames in  os.walk(rootdir):    #Analysys each o
         email_analyse(os.path.join(directory, filename), to_email_list, from_email_list, email_body )
 
 
-#Prints to the the CSV files 
-CSVPrint("to_email_list.txt",to_email_list)
-CSVPrint("from_email_list.txt",from_email_list)
-CSVPrint("email_body.txt",email_body)
+#Prints to the the txt files 
+txtPrint("to_email_list.txt",to_email_list)
+txtPrint("from_email_list.txt",from_email_list)
+txtPrint("email_body.txt",email_body)
 
 
 #Used to print the top 10 common email addresses that the given user send emails too
@@ -71,6 +74,31 @@ for x in Counter(to_email_list).most_common(10):
 print("\nThese are the top 10 addresses that " + userinput + " received emails from\n")
 for x in Counter(from_email_list).most_common(10):
     print(x)
+
+
+#Below array is used to remove some common words in an email
+arr = ['>','From:','To:','Subject:','-----Original','Message-----','Sent:', 'PM', 'Corp.', '-']
+#Reads in the body email as data
+
+with open("email_body.txt", "r") as f:
+    data = f.read()
+
+tokens = [t for t in data.split()]
+clean_tokens = tokens[:]
+sr = stopwords.words('english')
+
+for token in tokens:
+    if token in stopwords.words('english') or token in arr:
+        clean_tokens.remove(token)
+
+freq = nltk.FreqDist(clean_tokens)
+
+for key, val in freq.items():
+    if val > 100:
+        print(str(key) + ':' + str(val))
+
+freq.tabulate(20)
+freq.plot(20,cumulative =False)
 
 
 #---------------Main Method---------------#
