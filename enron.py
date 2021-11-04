@@ -75,7 +75,7 @@ print("\nThese are the top 10 addresses that " + userinput + " received emails f
 for x in Counter(from_email_list).most_common(10):
     print(x)
 
-
+print("\n\n")
 #Below array is used to remove some common words in an email
 arr = ['>','From:','To:','Subject:','-----Original','Message-----','Sent:', 'PM', 'Corp.', '-']
 #Reads in the body email as data
@@ -100,5 +100,5 @@ for key, val in freq.items():
 freq.tabulate(20)
 freq.plot(20,cumulative =False)
 
-
+print("\n\n")
 #---------------Main Method---------------#
