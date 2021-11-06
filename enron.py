@@ -83,21 +83,22 @@ arr = ['>','From:','To:','Subject:','-----Original','Message-----','Sent:', 'PM'
 
 with open("email_body.txt", "r") as f:
     data = f.read()
-
+#Used to split the data into specific tokens for frequency
 tokens = [t for t in data.split()]
 clean_tokens = tokens[:]
 sr = stopwords.words('english')
 
-for token in tokens:
+for token in tokens: #Removes stopwords 
     if token in stopwords.words('english') or token in arr:
         clean_tokens.remove(token)
 
-freq = nltk.FreqDist(clean_tokens)
+freq = nltk.FreqDist(clean_tokens) #For Frequency
 
 for key, val in freq.items():
     if val > 100:
         print(str(key) + ':' + str(val))
 
+#outputs table and graph
 freq.tabulate(20)
 freq.plot(20,cumulative =False)
 
