@@ -6,8 +6,7 @@ from nltk.tokenize import word_tokenize
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 
-
-
+#Cited Source Code that we used to read in the data. https://new.pythonforengineers.com/blog/analysing-the-enron-email-corpus/
 #---------------Functions---------------#
 
 #This funcitons analysys the emails and inputs to given lists
@@ -38,6 +37,8 @@ def txtPrint(filename,email_list):
             f.write(to_email)
             f.write("\n") 
 #---------------Functions---------------#
+
+
 
 #---------------Main Method---------------#
 
